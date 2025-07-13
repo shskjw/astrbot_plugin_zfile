@@ -1,14 +1,6 @@
-# 导入核心客户端
 import httpx
-import json
 
-
-# 使用上下文管理器自动处理登录和注销
-with open('config.json', 'r') as f:
-    config = json.loads(f.read())
-
-
-async def get_token(verify_code: str = None, verify_code_uuid: str = None):
+async def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     """
     发送登录请求
 

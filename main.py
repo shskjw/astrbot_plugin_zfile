@@ -22,7 +22,7 @@ class ZFilePlugin(Star):
         self.zf = None
         try:
             if config.get('user_name') and config.get('user_password'):
-                config['access_token'] = get_token()
+                config['access_token'] = get_token(config)
             if config.get('access_token'):
                 self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
             else:
