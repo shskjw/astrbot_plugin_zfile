@@ -18,6 +18,7 @@ class ZFilePlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.context = context
+        self.zf = None
         try:
             with ApiClient(base_url=config["zfile_base_url"]) as client:
                 if config.get('user_name') and config.get('user_password'):
