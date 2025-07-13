@@ -1,7 +1,6 @@
 # zfile_sdk_client.py
 
 import json
-import os
 import io
 import requests # Still needed for raw file uploads if SDK doesn't abstract it fully
 from astrbot.api import logger
@@ -248,7 +247,7 @@ class ZFileClient:
         self.site_basic = MockSiteBasicModule(self.api_client)
         self.user_interface = MockUserInterface(self.api_client)
 
-        logger.info(f"[ZFileClient] initialized with ZFile SDK Front modules.")
+        logger.info("[ZFileClient] initialized with ZFile SDK Front modules.")
 
     def health(self) -> dict:
         """

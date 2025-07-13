@@ -1,5 +1,5 @@
-name: helloworld # 这是你的插件的唯一识别名。
-desc: 这是 AstrBot 的默认插件，支持关键词回复。 # 插件简短描述
-version: v1.3 # 插件版本号。格式：v1.1.1 或者 v1.1
-author: Soulter # 作者
-repo: https://github.com/Soulter/helloworld # 插件的仓库地址
+name: ZFile_plugin # 这是你的插件的唯一识别名。
+desc: 基于 ZFile 项目开发的 AstrBot 插件，用于通过群聊指令远程管理文件，支持文件列表查看、上传下载、短链生成等操作。 # 插件简短描述
+version: v0.1.1 # 插件版本号。格式：v1.1.1 或者 v1.1
+author: shskjw # 作者
+repo: https://github.com/shskjw/astrbot_plugin_zfile # 插件的仓库地址

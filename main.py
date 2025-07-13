@@ -1,16 +1,15 @@
-import io
 import os
 import typing
 
 import requests
-from ZfileSDK.utils.models import DeleteItem, BatchGenerateLinkRequest
+from ZfileSDK.utils.models import DeleteItem, BatchGenerateLinkRequest  # noqa: F401
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 
 from ZfileSDK.utils import ApiClient
-from ZfileSDK.front import *
-from ZfileSDK.admin import *
+from ZfileSDK.front import *  # noqa: F403
+from ZfileSDK.admin import *  # noqa: F403
 from astrbot.core.message.components import Reply, File, Image, Video, BaseMessageComponent
 
 
@@ -28,7 +27,7 @@ class ZFilePlugin(Star):
         self.perm = config['permissions']
 
     async def initialize(self):
-        user_interface = UserInterface(self.zf)
+        user_interface = UserInterface(self.zf)  # noqa: F405
         check = user_interface.login_check()
         logger.info("ZFile 插件就绪：" + check.data.to_str())
         return check.data.is_login
@@ -91,7 +90,7 @@ async def cmd_ls(self, event: AstrMessageEvent):
         return
 
     try:
-        file_list_module = FileListModule(self.zf)
+        file_list_module = FileListModule(self.zf)  # noqa: F405
         files = file_list_module.storage_files(
             storage_key=storage_key,
             path=path
@@ -150,7 +149,7 @@ async def cmd_upload(self, event: AstrMessageEvent):
         replay_chain = file_message.chain
         replay_message = replay_chain[0]
         if replay_message.type in ["File", "Image", "Video"]:
-            replay_message: typing.Optional[File, Image, Video]
+            replay_message: typing.Optional[File, Image, Video] # type: ignore
             file_url = replay_message.url
             file_data = requests.get(file_url).content
         else:
@@ -162,7 +161,7 @@ async def cmd_upload(self, event: AstrMessageEvent):
     logger.info(f"[ZFilePlugin] 准备上传 {file_name} 到 {storage_key}:{remote_path}")
 
     try:
-        file_module = FileOperationModule(self.zf)
+        file_module = FileOperationModule(self.zf)  # noqa: F405
         file_module.upload_file(
             storage_key=storage_key,
             path=remote_path,
@@ -170,7 +169,7 @@ async def cmd_upload(self, event: AstrMessageEvent):
             size=file_size,
         )
 
-        file_upload_model = FileUploadStorageKey(self.zf)
+        file_upload_model = FileUploadStorageKey(self.zf)  # noqa: F405
         response = file_upload_model.upload_proxy(
             storage_key=storage_key,
             path=remote_path,
@@ -212,7 +211,7 @@ async def cmd_download(self, event: AstrMessageEvent):
     logger.info(f"[ZFilePlugin] 下载文件: storage_key={storage_key}, file_path={file_path}")
 
     try:
-        file_list_module = FileListModule(self.zf)
+        file_list_module = FileListModule(self.zf)  # noqa: F405
         file = file_list_module.storage_files_item(
             storage_key=storage_key,
             path=file_path
@@ -253,7 +252,7 @@ async def cmd_generate_short_link(self, event: AstrMessageEvent):
             return
 
     try:
-        direct_short_chain_module = DirectShortChainModule(self.zf)
+        direct_short_chain_module = DirectShortChainModule(self.zf)  # noqa: F405
         response = direct_short_chain_module.short_link_batch_generate(
             storage_key=storage_key,
             paths=[file_path],
@@ -293,7 +292,7 @@ async def cmd_search(self, event: AstrMessageEvent):
 
     logger.info(f"[ZFilePlugin] 搜索命令: keyword='{keyword}', storage_key={storage_key}, path={path}")
 
-    file_list_module = FileListModule(self.zf)
+    file_list_module = FileListModule(self.zf)  # noqa: F405
     try:
         files = file_list_module.storage_search(
             storage_key=storage_key,
@@ -343,8 +342,8 @@ async def cmd_delete(self, event: AstrMessageEvent):
 
     results = []
     delete_items_by_storage = {}
-    file_list_module = FileListModule(self.zf)
-    file_operation_module = FileOperationModule(self.zf)
+    file_list_module = FileListModule(self.zf)  # noqa: F405
+    file_operation_module = FileOperationModule(self.zf)  # noqa: F405
 
     for full_path_with_storage in paths_to_delete:
         storage_key = None
@@ -402,7 +401,7 @@ async def cmd_storage_list(self, event: AstrMessageEvent):
         yield event.plain_result("仅管理员可查询存储源列表。")
         return
 
-    storage_model = StorageSourceModuleBasic(self.zf)
+    storage_model = StorageSourceModuleBasic(self.zf)  # noqa: F405
     try:
         res = storage_model.storage_list()
         if res.code == "0":
@@ -434,7 +433,7 @@ async def cmd_storage_config(self, event: AstrMessageEvent):
         yield event.plain_result("存储源ID必须为数字，例如：获取存储源设置 1")
         return
 
-    storage_model = StorageSourceModuleBasic(self.zf)
+    storage_model = StorageSourceModuleBasic(self.zf)  # noqa: F405
     try:
         res = storage_model.storage_item(storage_id=storage_id)
         if res.code == "0":
@@ -453,7 +452,7 @@ async def cmd_global_config(self, event: AstrMessageEvent):
         yield event.plain_result("仅管理员可查询全局设置。")
         return
 
-    site_model = SiteBasicModule(self.zf)
+    site_model = SiteBasicModule(self.zf)  # noqa: F405
     try:
         res = site_model.config_global()
         if res.code == "0":
