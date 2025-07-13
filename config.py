@@ -13,9 +13,7 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     Returns:
         str: 访问令牌（access_token）
     """
-    logger.info(f"[ZFilePlugin] ZFile API: {config['base_url']}")
-    logger.info(f"[ZFilePlugin] 正在使用用户名 {config['user_name']} 登录 ZFile API")
-    logger.info(f"[ZFilePlugin] 密码: {config['user_password']}")
+    logger.info(f"[ZFilePlugin] 配置文件: {config}")
     with httpx.Client() as client:
         payload = {
             "username": config['user_name'],
