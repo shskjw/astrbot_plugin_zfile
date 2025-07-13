@@ -29,8 +29,7 @@ async def get_token(config, verify_code: str = None, verify_code_uuid: str = Non
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            login = await client.post(f"{config['base_url']}/user/login", json=payload)
-            login_data = login.json()
+            login_data = await client.post(f"{config['base_url']}/user/login", json=payload)
             return login_data.get('data', {}).get('token', None)
         except httpx.HTTPError as e:
             logger.error(f"HTTP 请求错误: {e}")
