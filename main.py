@@ -19,19 +19,20 @@ class ZFilePlugin(Star):
         super().__init__(context)
         self.context = context
         try:
-            if config.get('user_name') and config.get('user_password'):
-                self.zf = ApiClient.login(
-                    base_url=config['zfile_base_url'],
-                    username=config['user_name'],
-                    password=config['user_password']
-                )
-            elif config.get('access_token'):
-                self.zf = ApiClient(
-                    base_url=config['zfile_base_url'],
-                    token=config['access_token']
-                )
-            else:
-                logger.error("配置中缺少有效的 ZFile API 登录信息。请提供用户名和密码或访问令牌。")
+            with ApiClient(base_url=config["zfile_base_url"]) as client:
+                if config.get('user_name') and config.get('user_password'):
+                    self.zf = client.login(
+                        username=config['user_name'],
+                        password=config['user_password']
+                    )
+                elif config.get('access_token'):
+                    logger.info(f"未设置用户名或者密码，使用访问令牌登录 ZFile API：{config["zfile_base_url"]}")
+                    self.zf = client(
+                        base_url=config['zfile_base_url'],
+                        token=config['access_token']
+                    )
+                else:
+                    logger.error("配置中缺少有效的 ZFile API 登录信息。请提供用户名和密码或访问令牌。")
         except Exception as e:
             logger.error(f"[ZFilePlugin] 初始化 ZFile API 客户端失败：{e}", exc_info=True)
 

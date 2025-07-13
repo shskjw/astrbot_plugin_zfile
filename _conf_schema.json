@@ -14,13 +14,13 @@
   "user_password": {
     "description": "ZFile 管理员密码",
     "type": "string",
-    "default": "your_password",
+    "default": "",
     "hint": "请填写你的 ZFile 管理员密码"
   },
   "access_token": {
     "description": "ZFile Token",
     "type": "string",
-    "default": "your_access_token",
+    "default": "",
     "hint": "ZFile 后台获取的 API 密钥（用户名与密钥二选一）"
   },
   "admins": {
