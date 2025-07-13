@@ -11,6 +11,7 @@ from ZfileSDK.utils import ApiClient
 from ZfileSDK.front import *  # noqa: F403
 from ZfileSDK.admin import *  # noqa: F403
 from astrbot.core.message.components import Reply, File, Image, Video, BaseMessageComponent
+from .config import get_token
 
 
 @register("zfile_plugin", "溜溜球", "基于 ZFile API 的文件管理插件", "0.1.0")
@@ -19,31 +20,18 @@ class ZFilePlugin(Star):
         super().__init__(context)
         self.context = context
         self.zf = None
-        with ApiClient(base_url=config["zfile_base_url"]) as client:
-            client.login(
-                username=config["user_name"],
-                password=config["user_password"]
-            )
-            user_interface = UserInterface(client)  # noqa: F405
-            logger.info(f"[ZFilePlugin] ZFile API 客户端初始化成功：{user_interface.login_check()}。")
-        # try:
-        #     if config.get('user_name') and config.get('user_password'):
-        #         self.api_client = ApiClient(base_url=config["zfile_base_url"])
-        #         self.api_client.login(
-        #             username=config['user_name'],
-        #             password=config['user_password']
-        #         )
-        #         self.zf = self.api_client
-        #     elif config.get('access_token'):
-        #         logger.info("[ZFilePlugin] 未设置用户名或者密码，使用访问令牌登录 ZFile API。")
-        #         self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
-        #     else:
-        #         logger.error("[ZFilePlugin] 配置中缺少有效的 ZFile API 登录信息。请设置用户名和密码或访问令牌。")
+        try:
+            if config.get('user_name') and config.get('user_password'):
+                config['access_token'] = get_token()
+            if config.get('access_token'):
+                self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
+            else:
+                logger.error("[ZFilePlugin] 配置中缺少有效的 ZFile API 登录信息。请检查用户名和密码或访问令牌。")
                 
-        # except Exception as e:
-        #     logger.error(f"[ZFilePlugin] 初始化 ZFile API 客户端失败：{e}", exc_info=True)
-        # else:
-        #     logger.info(f"[ZFilePlugin] ZFile API 客户端初始化成功：{config['zfile_base_url']}。")
+        except Exception as e:
+            logger.error(f"[ZFilePlugin] 初始化 ZFile API 客户端失败：{e}", exc_info=True)
+        else:
+            logger.info(f"[ZFilePlugin] ZFile API 客户端初始化成功：{config['zfile_base_url']}。")
 
         self.admins = config['admins']
         self.perm = config['permissions']
