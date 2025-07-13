@@ -2,7 +2,7 @@
   "zfile_base_url": {
     "description": "ZFile 根地址",
     "type": "string",
-    "default": "http://127.0.0.1:8080/api",
+    "default": "http://127.0.0.1:8080",
     "hint": "请填写你的 ZFile 后端 API 根地址（结尾不要有斜杠）"
   },
   "user_name": {

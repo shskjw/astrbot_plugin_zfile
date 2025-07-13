@@ -1,5 +1,6 @@
 import os
 import typing
+from urllib.parse import urlparse
 
 import requests
 from ZfileSDK.utils.models import DeleteItem, BatchGenerateLinkRequest  # noqa: F401
@@ -20,6 +21,12 @@ class ZFilePlugin(Star):
         self.context = context
         self.zf = None
         try:
+            if config.get('zfile_base_url'):
+                zfile_base_url = urlparse(config['zfile_base_url'])
+                config["zfile_base_url"] = f"{zfile_base_url.scheme}://{zfile_base_url.netloc}"
+            else:
+                logger.error("[ZFilePlugin] 配置中缺少 ZFile API 根地址，请设置 zfile_base_url。")
+                return
             if config.get('user_name') and config.get('user_password'):
                 self.api_client = ApiClient(base_url=config["zfile_base_url"])
                 self.api_client.login(
