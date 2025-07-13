@@ -1,24 +1,22 @@
 import httpx
 from astrbot.api import logger
 
-async def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
+def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     """
     发送登录请求
 
     Args:
-        base_url (str): API 的基础 URL，例如 "http://localhost:8080"
-        username (str): 用户名
-        password (str): 密码
+        config (dict): 配置字典，包含 base_url、user_name、user_password 等信息
         verify_code (str, optional): 验证码（如果需要）
         verify_code_uuid (str, optional): 验证码的唯一标识
 
     Returns:
-        dict: 登录响应结果的 JSON 数据
+        str: 访问令牌（access_token）
     """
     logger.info(f"[ZFilePlugin] ZFile API: {config['base_url']}")
     logger.info(f"[ZFilePlugin] 正在使用用户名 {config['user_name']} 登录 ZFile API")
     logger.info(f"[ZFilePlugin] 密码: {config['user_password']}")
-    async with httpx.AsyncClient() as client:
+    with httpx.Client() as client:
         payload = {
             "username": config['user_name'],
             "password": config['user_password'],
@@ -29,9 +27,10 @@ async def get_token(config, verify_code: str = None, verify_code_uuid: str = Non
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            login_data = await client.post(f"{config['base_url']}/user/login", json=payload)
-            logger.info(f"[ZFilePlugin] 登录响应: {login_data.text}")
-            return login_data['data']['token']
+            response = client.post(f"{config['base_url']}/user/login", json=payload)
+            response.raise_for_status()  # 检查 HTTP 状态码是否为 200 系列
+            login_result = response.json()
+            return login_result.get('data', {}).get('token')
         except httpx.HTTPError as e:
             logger.error(f"HTTP 请求错误: {e}")
             return None
