@@ -20,9 +20,8 @@ class ZFilePlugin(Star):
         self.context = context
         self.zf = None
         try:
-            self.api_client = ApiClient(base_url=config["zfile_base_url"])
-            
             if config.get('user_name') and config.get('user_password'):
+                self.api_client = ApiClient(base_url=config["zfile_base_url"])
                 self.api_client.login(
                     username=config['user_name'],
                     password=config['user_password']
