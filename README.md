@@ -5,6 +5,8 @@
 
 本插件依托于 [cuckoo711/zfile_sdk](https://github.com/cuckoo711/zfile_sdk) 项目所提供的 ZFile API 封装，向其开发者表示特别感谢。
 
+token获取教程请看官方文档   https://api.zfile.vip/
+ 
 ## 🌟 插件功能
 
 通过群聊指令触发以下操作（详见下表）：
