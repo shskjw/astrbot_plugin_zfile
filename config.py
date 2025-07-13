@@ -25,10 +25,8 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            response = client.post(f"{config['zfile_base_url']}/user/login", json=payload)
-            response.raise_for_status()  # 检查 HTTP 状态码是否为 200 系列
-            login_result = response.json()
-            return login_result.get('data', {}).get('token')
+            login = client.post(f"{config['zfile_base_url']}/user/login", json=payload)
+            return login.get('data', {}).get('token')
         except httpx.HTTPError as e:
             logger.error(f"HTTP 请求错误: {e}")
             return None
