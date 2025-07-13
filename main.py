@@ -35,13 +35,13 @@ class ZFilePlugin(Star):
     @staticmethod
     def _uid(evt: AstrMessageEvent):
         uid = None
-        if hasattr(evt, 'get_user_id'):
+        if hasattr(evt, 'is_admin'):
             try:
-                uid = evt.get_user_id()
+                uid = evt.is_admin()
             except Exception:
                 pass
-        if uid is None and hasattr(evt, 'user_id'):
-            uid = evt.user_id
+        if uid is None and hasattr(evt, 'get_sender_id'):
+            uid = evt.get_sender_id
         return uid
 
     def _check_admin(self, uid: int) -> bool:
