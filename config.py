@@ -1,5 +1,6 @@
 import httpx
 from astrbot.api import logger
+from urllib.parse import urlparse
 
 def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     """
@@ -24,7 +25,8 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            login = client.post(f"{config['zfile_base_url']}/user/login", json=payload)
+            base_url = urlparse(config['zfile_base_url'])
+            login = client.post(f"{base_url}/user/login", json=payload)
             logger.info(f"[ZFilePlugin] 登录请求响应: {login.status_code} - {login.text}")
             return login.get('data', {}).get('token')
         except httpx.HTTPError as e:
