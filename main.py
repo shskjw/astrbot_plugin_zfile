@@ -27,7 +27,7 @@ class ZFilePlugin(Star):
                         password=config['user_password']
                     )
                 elif config.get('access_token'):
-                    logger.info(f"未设置用户名或者密码，使用访问令牌登录 ZFile API：{config["zfile_base_url"]}")
+                    logger.info("未设置用户名或者密码，使用访问令牌登录 ZFile API。")
                     self.zf = client(
                         base_url=config['zfile_base_url'],
                         token=config['access_token']
