@@ -14,7 +14,7 @@ from ZfileSDK.admin import *  # noqa: F403
 from astrbot.core.message.components import Reply, File, Image, Video, BaseMessageComponent
 
 
-@register("zfile_plugin", "溜溜球", "基于 ZFile API 的文件管理插件", "0.1.0")
+@register("zfile_plugin", "溜溜球", "基于 ZFile API 的文件管理插件", "0.1.1")
 class ZFilePlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
@@ -27,16 +27,19 @@ class ZFilePlugin(Star):
             else:
                 logger.error("[ZFilePlugin] 配置中缺少 ZFile API 根地址，请设置 zfile_base_url。")
                 return
+            
             if config.get('user_name') and config.get('user_password'):
                 self.api_client = ApiClient(base_url=config["zfile_base_url"])
                 self.api_client.login(
                     username=config['user_name'],
                     password=config['user_password']
                 )
+                logger.info(f"[ZFilePlugin] 响应：{self.api_client.response}")
                 self.zf = self.api_client
             elif config.get('access_token'):
                 logger.info("[ZFilePlugin] 未设置用户名或者密码，使用访问令牌登录 ZFile API。")
                 self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
+                logger.info(f"[ZFilePlugin] 响应：{self.zf.response}")
             else:
                 logger.error("[ZFilePlugin] 配置中缺少有效的 ZFile API 登录信息。请设置用户名和密码或访问令牌。")
                 
