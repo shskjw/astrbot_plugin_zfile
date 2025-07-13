@@ -34,12 +34,12 @@ class ZFilePlugin(Star):
                     username=config['user_name'],
                     password=config['user_password']
                 )
-                logger.info(f"[ZFilePlugin] 响应：{self.api_client.response}")
+                logger.info(f"[ZFilePlugin] 响应：{self.api_client}")
                 self.zf = self.api_client
             elif config.get('access_token'):
                 logger.info("[ZFilePlugin] 未设置用户名或者密码，使用访问令牌登录 ZFile API。")
                 self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
-                logger.info(f"[ZFilePlugin] 响应：{self.zf.response}")
+                logger.info(f"[ZFilePlugin] 响应：{self.zf}")
             else:
                 logger.error("[ZFilePlugin] 配置中缺少有效的 ZFile API 登录信息。请设置用户名和密码或访问令牌。")
                 
