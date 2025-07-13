@@ -45,6 +45,9 @@ class ZFilePlugin(Star):
         return uid
 
     def _check_admin(self, uid: int) -> bool:
+        logger.debug(f"[ZFilePlugin] Checking if user {uid} is admin.")
+        logger.debug(f"[ZFilePlugin] Admins list: {self.admins}")
+        logger.debug(f"[ZFilePlugin] User ID to check: {uid}")
         return uid in self.admins
 
     def _check_permission(self, uid: int, permission_type: str, admin_only_check: str) -> bool:
