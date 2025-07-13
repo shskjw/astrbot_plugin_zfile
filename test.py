@@ -9,9 +9,9 @@ with open('config.json', 'r') as f:
     config = json.loads(f.read())
 
 
-with ApiClient.login(base_url=config["zfile_base_url"], username=config['user_name'], password=config['user_password']) as client:
-    # client.login(username="740424462", password="MCmm431322")
-    file_list_module = FileListModule(client)
+with ApiClient() as client:
+    client.login(username=config['user_name'], password=config['user_password'])
+    #file_list_module = FileListModule(client)
     # files = file_list_module.storage_files(
     #     storage_key="1",
     #     path="2",
