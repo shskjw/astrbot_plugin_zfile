@@ -1,4 +1,5 @@
 import httpx
+from astrbot.api import logger
 
 async def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     """
@@ -14,6 +15,9 @@ async def get_token(config, verify_code: str = None, verify_code_uuid: str = Non
     Returns:
         dict: 登录响应结果的 JSON 数据
     """
+    logger.info(f"[ZFilePlugin] ZFile API: {config['base_url']}")
+    logger.info(f"[ZFilePlugin] 正在使用用户名 {config['user_name']} 登录 ZFile API")
+    logger.info(f"[ZFilePlugin] 密码: {config['user_password']}")
     async with httpx.AsyncClient() as client:
         payload = {
             "username": config['user_name'],
@@ -25,9 +29,9 @@ async def get_token(config, verify_code: str = None, verify_code_uuid: str = Non
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            response = await client.post(f"{config['base_url']}/user/login", json=payload)
-            response.raise_for_status()
-            return response.json()
+            login = await client.post(f"{config['base_url']}/user/login", json=payload)
+            login_data = login.json()
+            return login_data.get('data', {}).get('token', None)
         except httpx.HTTPError as e:
-            print(f"HTTP 请求错误: {e}")
+            logger.error(f"HTTP 请求错误: {e}")
             return None

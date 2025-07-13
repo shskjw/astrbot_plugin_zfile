@@ -24,6 +24,7 @@ class ZFilePlugin(Star):
             if config.get('user_name') and config.get('user_password'):
                 config['access_token'] = get_token(config)
             if config.get('access_token'):
+                logger.info(f"[ZFilePlugin] 使用访问令牌登录 ZFile API：{config['access_token']}")
                 self.zf = ApiClient(base_url=config['zfile_base_url'], token=config['access_token'])
             else:
                 logger.error("[ZFilePlugin] 配置中缺少有效的 ZFile API 登录信息。请检查用户名和密码或访问令牌。")
