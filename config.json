@@ -1,0 +1,21 @@
+{
+  "zfile_base_url": "http://127.0.0.1:8080/api",
+  "access_token": "your_access_token",
+    "description": "管理员用户ID列表",
+    "type": "list",
+    "hint": "若不填则默认从全局配置中加载管理员"
+  },
+  "permissions": {
+    "upload_enabled": true,
+    "upload_admin_only": true,
+    "download_enabled": true,
+    "download_admin_only": false,
+    "search_enabled": true,
+    "search_admin_only": false,
+    "delete_enabled": true,
+    "delete_admin_only": true,
+    "short_link_enabled": true,
+    "short_link_admin_only": false
+  },
+  "short_link_expire_time": 86400
+}

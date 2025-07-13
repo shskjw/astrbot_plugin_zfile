@@ -1,0 +1,82 @@
+{
+  "zfile_base_url": {
+    "description": "ZFile 根地址",
+    "type": "string",
+    "default": "http://127.0.0.1:8080/api",
+    "hint": "请填写你的 ZFile 后端 API 根地址（结尾不要有斜杠）"
+  },
+  "access_token": {
+    "description": "ZFile Token",
+    "type": "string",
+    "default": "your_access_token",
+    "hint": "ZFile 后台获取的 API 密钥"
+  },
+  "admins": {
+    "description": "管理员用户ID列表",
+    "type": "list",
+    "default": [12345678],
+    "hint": "这些人拥有所有权限"
+  },
+  "permissions": {
+    "description": "权限控制开关",
+    "type": "object",
+    "items": {
+      "upload_enabled": {
+        "description": "启用上传",
+        "type": "bool",
+        "default": true
+      },
+      "upload_admin_only": {
+        "description": "上传仅限管理员",
+        "type": "bool",
+        "default": true
+      },
+      "download_enabled": {
+        "description": "启用下载",
+        "type": "bool",
+        "default": true
+      },
+      "download_admin_only": {
+        "description": "下载仅限管理员",
+        "type": "bool",
+        "default": false
+      },
+      "search_enabled": {
+        "description": "启用搜索",
+        "type": "bool",
+        "default": true
+      },
+      "search_admin_only": {
+        "description": "搜索仅限管理员",
+        "type": "bool",
+        "default": false
+      },
+      "delete_enabled": {
+        "description": "启用删除",
+        "type": "bool",
+        "default": true
+      },
+      "delete_admin_only": {
+        "description": "删除仅限管理员",
+        "type": "bool",
+        "default": true
+      },
+      "short_link_enabled": {
+        "description": "启用短链功能",
+        "type": "bool",
+        "default": true
+      },
+      "short_link_admin_only": {
+        "description": "短链功能仅限管理员",
+        "type": "bool",
+        "default": false
+      }
+    }
+  },
+  "short_link_expire_time": {
+    "description": "短链有效期（单位：秒）",
+    "type": "int",
+    "default": 86400,
+    "hint": "设置短链的有效期，默认是24小时"
+  }
+}
