@@ -19,6 +19,13 @@ class ZFilePlugin(Star):
         super().__init__(context)
         self.context = context
         self.zf = None
+        with ApiClient(base_url=config["zfile_base_url"]) as client:
+            client.login(
+                username=config["user_name"],
+                password=config["user_password"]
+            )
+            user_interface = UserInterface(client)  # noqa: F405
+            logger.info(f"[ZFilePlugin] ZFile API 客户端初始化成功：{user_interface.login_check()}。")
         # try:
         #     if config.get('user_name') and config.get('user_password'):
         #         self.api_client = ApiClient(base_url=config["zfile_base_url"])
