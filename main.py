@@ -18,8 +18,22 @@ class ZFilePlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.context = context
-
-        self.zf = ApiClient(config['zfile_base_url'], config['access_token'])
+        try:
+            if config.get('user_name') and config.get('user_password'):
+                self.zf = ApiClient.login(
+                    base_url=config['zfile_base_url'],
+                    username=config['user_name'],
+                    password=config['user_password']
+                )
+            elif config.get('access_token'):
+                self.zf = ApiClient(
+                    base_url=config['zfile_base_url'],
+                    token=config['access_token']
+                )
+            else:
+                logger.error("配置中缺少有效的 ZFile API 登录信息。请提供用户名和密码或访问令牌。")
+        except Exception as e:
+            logger.error(f"[ZFilePlugin] 初始化 ZFile API 客户端失败：{e}", exc_info=True)
 
         logger.info(f"[ZFilePlugin] ZFile base URL loaded: {config['zfile_base_url']}")
 
@@ -45,9 +59,6 @@ class ZFilePlugin(Star):
         return uid
 
     def _check_admin(self, uid: int) -> bool:
-        logger.debug(f"[ZFilePlugin] Checking if user {uid} is admin.")
-        logger.debug(f"[ZFilePlugin] Admins list: {self.admins}")
-        logger.debug(f"[ZFilePlugin] User ID to check: {uid}")
         return uid in self.admins
 
     def _check_permission(self, uid: int, permission_type: str, admin_only_check: str) -> bool:
