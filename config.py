@@ -30,7 +30,8 @@ async def get_token(config, verify_code: str = None, verify_code_uuid: str = Non
 
         try:
             login_data = await client.post(f"{config['base_url']}/user/login", json=payload)
-            return login_data.get('data', {}).get('token', None)
+            logger.info(f"[ZFilePlugin] 登录响应: {login_data.text}")
+            return login_data['data']['token']
         except httpx.HTTPError as e:
             logger.error(f"HTTP 请求错误: {e}")
             return None
