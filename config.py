@@ -13,7 +13,6 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
     Returns:
         str: 访问令牌（access_token）
     """
-    logger.info(f"[ZFilePlugin] 配置文件: {config}")
     with httpx.Client() as client:
         payload = {
             "username": config['user_name'],
@@ -26,6 +25,7 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
 
         try:
             login = client.post(f"{config['zfile_base_url']}/user/login", json=payload)
+            logger.info(f"[ZFilePlugin] 登录请求响应: {login.status_code} - {login.text}")
             return login.get('data', {}).get('token')
         except httpx.HTTPError as e:
             logger.error(f"HTTP 请求错误: {e}")
