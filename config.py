@@ -25,7 +25,9 @@ def get_token(config, verify_code: str = None, verify_code_uuid: str = None):
             payload["verifyCodeUUID"] = verify_code_uuid
 
         try:
-            base_url = urlparse(config['zfile_base_url'])
+            
+            zfile_base_url = urlparse(config['zfile_base_url'])
+            base_url = f"{zfile_base_url.scheme}://{zfile_base_url.netloc}"
             login = client.post(f"{base_url}/user/login", json=payload)
             logger.info(f"[ZFilePlugin] 登录请求响应: {login.status_code} - {login.text}")
             return login.get('data', {}).get('token')
