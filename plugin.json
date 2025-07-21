@@ -3,7 +3,7 @@
   "title": "ZFile 文件管理插件",
   "description": "基于AstrBot Star接口，实现上传、下载、搜索、删除、自定义API，支持权限管理",
   "version": "0.1.0",
-  "author": "shskjw",
-  "homepage": "https://github.com/example/zfile-plugin",
+  "author": "sgjhw",
+  "homepage": "https://github.com/shskjw/astrbot_plugin_zfile",
   "entry": "main.py"
 }
