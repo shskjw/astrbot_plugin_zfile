@@ -1,6 +1,7 @@
 {
-  "name": "astrbot_plugin_zfile",
-  "desc": "基于 ZFile 的 AstrBot 插件，实现文件列表查看、上传、下载、短链生成等远程管理功能。",
-  "author": "shskjw",
-  "repo": "https://github.com/shskjw/astrbot_plugin_zfile"
+    "name": "astrbot_plugin_zfile",
+    "desc": "基于 ZFile 的 AstrBot 插件，实现文件列表查看、上传、下载、短链生成等远程管理功能。",
+    "author": "shskjw",
+    "repo": "https://github.com/shskjw/astrbot_plugin_zfile",
+    "version": "1.0.0"
 }
