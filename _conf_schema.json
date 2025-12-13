@@ -1,82 +1,40 @@
 {
   "zfile_base_url": {
-    "description": "ZFile 根地址",
+    "description": "ZFile 根地址 (例如 http://your-zfile.com/api)",
     "type": "string",
-    "default": "http://127.0.0.1:8080/api",
-    "hint": "请填写你的 ZFile 后端 API 根地址（结尾不要有斜杠）"
+    "default": "http://127.0.0.1:8080/api"
   },
-  "access_token": {
-    "description": "ZFile Token",
+  "username": {
+    "description": "管理员账号 (用于自动获取Token)",
     "type": "string",
-    "default": "your_access_token",
-    "hint": "ZFile 后台获取的 API 密钥"
+    "default": "admin"
+  },
+  "password": {
+    "description": "管理员密码",
+    "type": "string",
+    "default": "123456",
+    "is_password": true
+  },
+  "default_storage_key": {
+    "description": "默认存储源Key (如果不填，指令中需要指定)",
+    "type": "string",
+    "default": "local"
   },
   "admins": {
-    "description": "管理员用户ID列表",
+    "description": "管理员QQ/用户ID列表",
     "type": "list",
-    "default": [12345678],
-    "hint": "这些人拥有所有权限"
+    "default": []
   },
   "permissions": {
-    "description": "权限控制开关",
+    "description": "权限控制",
     "type": "object",
     "items": {
-      "upload_enabled": {
-        "description": "启用上传",
-        "type": "bool",
-        "default": true
-      },
-      "upload_admin_only": {
-        "description": "上传仅限管理员",
-        "type": "bool",
-        "default": true
-      },
-      "download_enabled": {
-        "description": "启用下载",
-        "type": "bool",
-        "default": true
-      },
-      "download_admin_only": {
-        "description": "下载仅限管理员",
-        "type": "bool",
-        "default": false
-      },
-      "search_enabled": {
-        "description": "启用搜索",
-        "type": "bool",
-        "default": true
-      },
-      "search_admin_only": {
-        "description": "搜索仅限管理员",
-        "type": "bool",
-        "default": false
-      },
-      "delete_enabled": {
-        "description": "启用删除",
-        "type": "bool",
-        "default": true
-      },
-      "delete_admin_only": {
-        "description": "删除仅限管理员",
-        "type": "bool",
-        "default": true
-      },
-      "short_link_enabled": {
-        "description": "启用短链功能",
-        "type": "bool",
-        "default": true
-      },
-      "short_link_admin_only": {
-        "description": "短链功能仅限管理员",
-        "type": "bool",
-        "default": false
-      }
+      "upload_enabled": { "type": "bool", "default": true },
+      "upload_admin_only": { "type": "bool", "default": true },
+      "download_enabled": { "type": "bool", "default": true },
+      "download_admin_only": { "type": "bool", "default": false },
+      "delete_enabled": { "type": "bool", "default": true },
+      "delete_admin_only": { "type": "bool", "default": true }
     }
-  },
-  "short_link_expire_time": {
-    "description": "短链有效期（单位：秒）",
-    "type": "int",
-    "default": 86400,
-    "hint": "设置短链的有效期，默认是24小时"
   }
 }
